@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_hint">Search title or author</string>
+    <string name="filter_new">New</string>
+    <string name="filter_genre">Genres</string>
+    <string name="filter_author">Authors</string>
+    <string name="filter_popular">Popular</string>
+    <string name="error_book_not_found">Error: book was not found</string>
+    <string name="rate_desc_general">My rate</string>
+    <string name="rate_desc_characters">Characters</string>
+    <string name="rate_desc_expectations">Expectations</string>
+    <string name="rate_desc_plot">Plot</string>
+</resources>

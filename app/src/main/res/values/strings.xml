@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name" translatable="false">Libook</string>
+    <string name="search_hint">Ищите книгу или автора</string>
+    <string name="filter_new">Новое</string>
+    <string name="filter_genre">Жанры</string>
+    <string name="filter_author">Авторы</string>
+    <string name="filter_popular">Топ</string>
+    <string name="error_book_not_found">Ошибка: книга не найдена</string>
+    <string name="rate_desc_general">Моя оценка</string>
+    <string name="rate_desc_characters">Персонажи</string>
+    <string name="rate_desc_expectations">Ожидания</string>
+    <string name="rate_desc_plot">Сюжет</string>
+</resources>
