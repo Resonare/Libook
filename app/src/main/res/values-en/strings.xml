@@ -10,4 +10,7 @@
     <string name="rate_desc_characters">Characters</string>
     <string name="rate_desc_expectations">Expectations</string>
     <string name="rate_desc_plot">Plot</string>
+    <string name="show_full_annotation">Show full</string>
+    <string name="hide_full_annotation">Hide</string>
+    <string name="my_thoughts">My thoughts</string>
 </resources>
