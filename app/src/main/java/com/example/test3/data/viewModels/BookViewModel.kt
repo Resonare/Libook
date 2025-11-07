@@ -22,6 +22,7 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
     var description by mutableStateOf("")
     var worldRate by mutableStateOf<Float?>(null)
     var coverUri by mutableStateOf<String?>(null)
+    var isFavourite by mutableStateOf(false)
 
     init {
         val db = LibookDatabase.getInstance(application)
@@ -40,7 +41,8 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
             author = author,
             description = description,
             worldRate = worldRate,
-            coverUri = coverUri
+            coverUri = coverUri,
+            isFavourite = isFavourite,
         )
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -49,7 +51,7 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun editBook(id: String) {
+    fun editBook(id: String, onFinish: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.editBook(
                 Book(
@@ -58,9 +60,11 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
                     author = author,
                     description = description,
                     worldRate = worldRate,
-                    coverUri = coverUri
+                    coverUri = coverUri,
+                    isFavourite = isFavourite,
                 )
             )
+            onFinish()
         }
     }
 

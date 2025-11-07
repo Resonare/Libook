@@ -51,7 +51,7 @@ class ShowBookActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val bookId = intent.getSerializableExtra("bookId") as? String
+        val bookId = intent.getStringExtra("bookId")
 
         if (bookId == null) {
             Toast.makeText(this, R.string.error_book_not_found, Toast.LENGTH_LONG).show()
@@ -72,6 +72,17 @@ class ShowBookActivity: ComponentActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+        }
+
+        val handleEditBook = {
+            val intent = Intent(this, EditBookActivity::class.java)
+            intent.putExtra("bookId", bookId)
+            startActivity(intent)
+        }
+
+        val handleGoToShelf = {
+            val intent = Intent(this, ShelfActivity::class.java)
+            startActivity(intent)
         }
 
         setContent {
@@ -111,9 +122,7 @@ class ShowBookActivity: ComponentActivity() {
                             ) {
                                 CircleButton(
                                     painter = painterResource(R.drawable.ic_arrow_left),
-                                    onClick = {
-                                        finish()
-                                    },
+                                    onClick = handleGoToShelf,
                                     contentDescription = "Back button",
                                 )
 
@@ -140,9 +149,7 @@ class ShowBookActivity: ComponentActivity() {
 
                                     CircleButton(
                                         painter = painterResource(R.drawable.ic_edit_dark),
-                                        onClick = {
-
-                                        },
+                                        onClick = handleEditBook,
                                         contentDescription = "Edit button",
                                     )
 

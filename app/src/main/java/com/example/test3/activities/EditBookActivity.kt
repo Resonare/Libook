@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -23,18 +26,26 @@ import com.example.test3.ui.components.CircleButton
 import com.example.test3.ui.components.book.upsert.Form
 import com.example.test3.ui.theme.LibookTheme
 
-class AddBookActivity: ComponentActivity() {
+class EditBookActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val tryToAddBook = { viewModel: BookViewModel ->
+        val bookId = intent.getStringExtra("bookId")
+
+        if (bookId == null) {
+            Toast.makeText(this, R.string.error_book_not_found, Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+
+        val tryToEditBook = { viewModel: BookViewModel, bookId: String ->
             if (
                 !viewModel.title.isEmpty()
                 && !viewModel.author.isEmpty()
                 && viewModel.coverUri != null
             ) {
-                viewModel.addBook { bookId ->
+                viewModel.editBook(bookId) {
                     val intent = Intent(this, ShowBookActivity::class.java)
                     intent.putExtra("bookId", bookId)
                     startActivity(intent)
@@ -50,6 +61,19 @@ class AddBookActivity: ComponentActivity() {
 
         setContent {
             val viewModel: BookViewModel = viewModel()
+
+            val book by viewModel.getBook(bookId).observeAsState()
+
+            LaunchedEffect(book) {
+                book?.let {
+                    viewModel.title = it.title
+                    viewModel.author = it.author
+                    viewModel.description = it.description
+                    viewModel.worldRate = it.worldRate
+                    viewModel.coverUri = it.coverUri
+                    viewModel.isFavourite = it.isFavourite
+                }
+            }
 
             LibookTheme {
                 Scaffold (
@@ -74,7 +98,7 @@ class AddBookActivity: ComponentActivity() {
                             CircleButton(
                                 painter = painterResource(R.drawable.ic_save),
                                 onClick = {
-                                    tryToAddBook(viewModel)
+                                    tryToEditBook(viewModel, bookId)
                                 },
                                 contentDescription = "Save button",
                             )

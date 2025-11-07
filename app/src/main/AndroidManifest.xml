@@ -26,6 +26,7 @@
         <activity android:name=".activities.ShelfActivity" />
         <activity android:name=".activities.ShowBookActivity" />
         <activity android:name=".activities.AddBookActivity" />
+        <activity android:name=".activities.EditBookActivity" />
     </application>
 
 </manifest>
