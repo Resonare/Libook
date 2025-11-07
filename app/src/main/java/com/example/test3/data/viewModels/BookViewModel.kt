@@ -64,9 +64,10 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun deleteBook(id: String) {
+    fun deleteBook(id: String, onFinish: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteBook(id)
+            onFinish()
         }
     }
 }

@@ -22,4 +22,9 @@
     <string name="add_book_author_hint">Автор</string>
     <string name="add_book_world_rate_hint">Международный рейтинг</string>
     <string name="error_required_fields_are_empty">Ошибка: не все поля заполнены!</string>
+    <string name="delete_book_dialog_title">Удалить книгу?</string>
+    <string name="delete_book_dialog_body">Вы уверены, что хотите удалить</string>
+    <string name="delete_book_dialog_cancel">Отменить</string>
+    <string name="delete_book_dialog_confirm">Удалить</string>
+    <string name="error_delete_book">Ошибка: не удалось удалить книгу!</string>
 </resources>

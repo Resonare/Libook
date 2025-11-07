@@ -3,6 +3,7 @@ package com.example.test3.ui.components.shelf
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,110 +29,105 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.test3.R
-import com.example.test3.ui.components.PopupDialog
 
 @Composable
 fun AddBookMethodSelection(
-    onClose: () -> Unit,
     onAddBookScan: () -> Unit,
     onAddBookManually: () -> Unit,
 ) {
-    PopupDialog(
-        onDismiss = {
-            onClose()
-        }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+            .pointerInput(Unit) {
+                detectTapGestures { }
+            },
+        contentAlignment = Alignment.Center
     ) {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background),
-            contentAlignment = Alignment.Center
+                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 40.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
+            Text(
+                text = stringResource(R.string.add_book_method_selection_title),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                color = MaterialTheme.colorScheme.secondary,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(Modifier.height(30.dp))
+
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 40.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text(
-                    text = stringResource(R.string.add_book_method_selection_title),
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                    color = MaterialTheme.colorScheme.secondary,
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(Modifier.height(30.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    Box(
+                        modifier = Modifier
+                            .width(100.dp)
+                            .aspectRatio(1f)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primary)
+                            .clickable {
+                                onAddBookScan()
+                            },
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
+                        Image(
+                            painterResource(R.drawable.ic_scan),
+                            contentDescription = "Scan method",
+                            contentScale = ContentScale.Fit,
                             modifier = Modifier
-                                .width(100.dp)
-                                .aspectRatio(1f)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary)
-                                .clickable {
-                                    onAddBookScan()
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painterResource(R.drawable.ic_scan),
-                                contentDescription = "Scan method",
-                                contentScale = ContentScale.Fit,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                            )
-                        }
-
-                        Spacer(Modifier.height(10.dp))
-
-                        Text(
-                            text = stringResource(R.string.add_book_method_scan),
-                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                            color = MaterialTheme.colorScheme.secondary,
+                                .fillMaxWidth()
                         )
                     }
 
-                    Spacer(Modifier.width(30.dp))
+                    Spacer(Modifier.height(10.dp))
 
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    Text(
+                        text = stringResource(R.string.add_book_method_scan),
+                        style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
+
+                Spacer(Modifier.width(30.dp))
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .width(100.dp)
+                            .aspectRatio(1f)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primary)
+                            .clickable {
+                                onAddBookManually()
+                            },
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
+                        Image(
+                            painterResource(R.drawable.ic_edit),
+                            contentDescription = "Scan method",
+                            contentScale = ContentScale.Fit,
                             modifier = Modifier
-                                .width(100.dp)
-                                .aspectRatio(1f)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary)
-                                .clickable {
-                                    onAddBookManually()
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painterResource(R.drawable.ic_edit),
-                                contentDescription = "Scan method",
-                                contentScale = ContentScale.Fit,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                            )
-                        }
-
-                        Spacer(Modifier.height(10.dp))
-
-                        Text(
-                            text = stringResource(R.string.add_book_method_manual),
-                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                            color = MaterialTheme.colorScheme.secondary,
+                                .fillMaxWidth()
                         )
                     }
+
+                    Spacer(Modifier.height(10.dp))
+
+                    Text(
+                        text = stringResource(R.string.add_book_method_manual),
+                        style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
                 }
             }
         }

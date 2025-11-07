@@ -16,7 +16,8 @@ data class Book(
     val author: String,
     val description: String,
     var worldRate: Float?,
-    val coverUri: String? = null
+    val coverUri: String? = null,
+    val isFavourite: Boolean = false,
 ) {
     val worldRateColor: Color
         get () =

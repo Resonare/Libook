@@ -11,10 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,10 +27,9 @@ import com.example.test3.R
 @Composable
 fun Footer(
     modifier: Modifier,
-    onAddBookManually: () -> Unit,
-    onAddBookScan: () -> Unit,
+    onAddMethodSelectionOpen: () -> Unit,
 ) {
-    var addMethodSelectionIsVisible by remember { mutableStateOf(false) }
+
 
     Box (
         modifier = modifier,
@@ -87,7 +82,7 @@ fun Footer(
                 .background(MaterialTheme.colorScheme.primary)
                 .align(Alignment.TopCenter)
                 .clickable {
-                    addMethodSelectionIsVisible = true
+                    onAddMethodSelectionOpen()
                 },
             contentAlignment = Alignment.Center
         ) {
@@ -95,16 +90,6 @@ fun Footer(
                 painterResource(R.drawable.ic_plus),
                 contentDescription = "Add",
                 contentScale = ContentScale.Fit
-            )
-        }
-
-        if (addMethodSelectionIsVisible) {
-            AddBookMethodSelection(
-                onClose = {
-                    addMethodSelectionIsVisible = false
-                },
-                onAddBookManually = onAddBookManually,
-                onAddBookScan = onAddBookScan,
             )
         }
     }

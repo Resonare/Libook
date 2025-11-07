@@ -22,4 +22,9 @@
     <string name="add_book_author_hint">Author</string>
     <string name="add_book_world_rate_hint">World Rate</string>
     <string name="error_required_fields_are_empty">Error: required fields are empty</string>
+    <string name="delete_book_dialog_title">Delete book?</string>
+    <string name="delete_book_dialog_body">Are you sure you want to delete</string>
+    <string name="delete_book_dialog_cancel">Cancel</string>
+    <string name="delete_book_dialog_confirm">Delete</string>
+    <string name="error_delete_book">Error: couldn\'t delete book</string>
 </resources>

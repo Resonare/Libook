@@ -17,6 +17,13 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
     ),
+    bodyMedium = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter)),
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.4.sp,
+    ),
     bodySmall = TextStyle(
         fontFamily = FontFamily(Font(R.font.inter)),
         fontWeight = FontWeight.Medium,
