@@ -13,4 +13,13 @@
     <string name="show_full_annotation">Show full</string>
     <string name="hide_full_annotation">Hide</string>
     <string name="my_thoughts">My thoughts</string>
+    <string name="my_thought_add_hint">What do you think?</string>
+    <string name="add_book_method_selection_title">Add book</string>
+    <string name="add_book_method_manual">Add manually</string>
+    <string name="add_book_method_scan">Scan</string>
+    <string name="description_form_hint">Book description</string>
+    <string name="add_book_title_hint">Title</string>
+    <string name="add_book_author_hint">Author</string>
+    <string name="add_book_world_rate_hint">World Rate</string>
+    <string name="error_required_fields_are_empty">Error: required fields are empty</string>
 </resources>

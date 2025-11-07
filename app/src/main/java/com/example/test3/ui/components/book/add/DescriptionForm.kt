@@ -1,0 +1,86 @@
+package com.example.test3.ui.components.book.add
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.example.test3.R
+
+@Composable fun DescriptionForm(
+    value: String,
+    onValueChange: (String) -> Unit,
+) {
+    var isFocused by remember { mutableStateOf(false) }
+
+    Row (
+        modifier = Modifier
+            .fillMaxSize()
+            .height(IntrinsicSize.Min)
+            .dropShadow(
+                shape = RoundedCornerShape(5.dp),
+                shadow = Shadow(
+                    radius = 6.dp,
+                    spread = 1.dp,
+                    color = Color(0x40000000),
+                )
+            )
+            .clip(RoundedCornerShape(5.dp))
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(start = 5.dp),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row (
+            modifier = Modifier
+                .padding(horizontal = 5.dp, vertical = 15.dp)
+                .weight(0.5f)
+                .padding(1.dp),
+        ) {
+            BasicTextField(
+                modifier = Modifier
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused && !isFocused
+                    }
+                    .fillMaxSize(),
+                value = value,
+                onValueChange = onValueChange,
+                textStyle = MaterialTheme.typography.bodySmall.copy(
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.Normal
+                ),
+                decorationBox = { innerTextField ->
+                    if (value.isEmpty() && !isFocused) {
+                        Text(
+                            text = stringResource(R.string.description_form_hint),
+                            color = MaterialTheme.colorScheme.tertiary,
+                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Normal),
+                        )
+                    }
+                    innerTextField()
+                }
+            )
+        }
+    }
+}

@@ -13,4 +13,13 @@
     <string name="show_full_annotation">Полная аннотация</string>
     <string name="hide_full_annotation">Скрыть аннотацию</string>
     <string name="my_thoughts">Мои мысли</string>
+    <string name="my_thought_add_hint">Что думаете о книге?</string>
+    <string name="add_book_method_selection_title">Добавить книгу</string>
+    <string name="add_book_method_manual">Добавить вручную</string>
+    <string name="add_book_method_scan">Сканер штрих-кода</string>
+    <string name="description_form_hint">Аннотация к книге</string>
+    <string name="add_book_title_hint">Название</string>
+    <string name="add_book_author_hint">Автор</string>
+    <string name="add_book_world_rate_hint">Международный рейтинг</string>
+    <string name="error_required_fields_are_empty">Ошибка: не все поля заполнены!</string>
 </resources>
