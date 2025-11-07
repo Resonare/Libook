@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Libook</string>
-    <string name="search_hint">Ищите книгу или автора</string>
+    <string name="search_hint">Поиск</string>
     <string name="filter_new">Новое</string>
     <string name="filter_genre">Жанры</string>
     <string name="filter_author">Авторы</string>
@@ -27,4 +27,5 @@
     <string name="delete_book_dialog_cancel">Отменить</string>
     <string name="delete_book_dialog_confirm">Удалить</string>
     <string name="error_delete_book">Ошибка: не удалось удалить книгу!</string>
+    <string name="share_title">Поделиться</string>
 </resources>

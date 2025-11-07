@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.test3.data.entities.Book
 import com.example.test3.data.viewModels.BookViewModel
-import com.example.test3.ui.components.book.BookCard
+import com.example.test3.ui.components.book.show.BookCard
 
 @Composable
 fun BooksGrid(

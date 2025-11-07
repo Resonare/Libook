@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -84,11 +85,13 @@ fun CoverPicker(value: String?, onLoad: (String) -> Unit) {
                 )
             }
         } else {
+            CircularProgressIndicator()
+
             AsyncImage(
                 model = value,
                 contentDescription = "Cover",
                 error = painterResource(R.drawable.ic_error_dark),
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.Crop,
             )
         }
     }

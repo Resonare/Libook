@@ -4,10 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -27,17 +29,16 @@ import com.example.test3.R
 @Composable
 fun Footer(
     modifier: Modifier,
+    innerPadding: PaddingValues,
     onAddMethodSelectionOpen: () -> Unit,
 ) {
-
-
     Box (
         modifier = modifier,
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.68f)
+                .fillMaxHeight(0.78f)
                 .dropShadow(
                     shape = RectangleShape,
                     shadow = Shadow(
@@ -48,7 +49,8 @@ fun Footer(
                     )
                 )
                 .background(MaterialTheme.colorScheme.background)
-                .align(Alignment.BottomCenter),
+                .align(Alignment.BottomCenter)
+                .padding(bottom = innerPadding.calculateBottomPadding()),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(

@@ -27,4 +27,5 @@
     <string name="delete_book_dialog_cancel">Cancel</string>
     <string name="delete_book_dialog_confirm">Delete</string>
     <string name="error_delete_book">Error: couldn\'t delete book</string>
+    <string name="share_title">Share</string>
 </resources>

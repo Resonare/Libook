@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -34,6 +35,7 @@ import com.example.test3.R
 fun AddBookMethodSelection(
     onAddBookScan: () -> Unit,
     onAddBookManually: () -> Unit,
+    innerPadding: PaddingValues,
 ) {
     Box(
         modifier = Modifier
@@ -41,13 +43,14 @@ fun AddBookMethodSelection(
             .background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) {
                 detectTapGestures { }
-            },
+            }
+            .padding(bottom = innerPadding.calculateBottomPadding()),
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 40.dp),
+                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -93,6 +96,7 @@ fun AddBookMethodSelection(
                         text = stringResource(R.string.add_book_method_scan),
                         style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
                         color = MaterialTheme.colorScheme.secondary,
+                        textAlign = TextAlign.Center,
                     )
                 }
 
@@ -127,6 +131,7 @@ fun AddBookMethodSelection(
                         text = stringResource(R.string.add_book_method_manual),
                         style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
                         color = MaterialTheme.colorScheme.secondary,
+                        textAlign = TextAlign.Center,
                     )
                 }
             }

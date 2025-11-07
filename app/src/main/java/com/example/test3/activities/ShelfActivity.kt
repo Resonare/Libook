@@ -108,11 +108,12 @@ class ShelfActivity: ComponentActivity() {
                         Footer(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(0.15f)
+                                .fillMaxHeight(0.2f)
                                 .align(Alignment.BottomCenter),
                             onAddMethodSelectionOpen = {
                                 addMethodSelectionIsVisible = true
                             },
+                            innerPadding = innerPadding
                         )
                     }
 
@@ -147,6 +148,7 @@ class ShelfActivity: ComponentActivity() {
                             AddBookMethodSelection(
                                 onAddBookManually = handleAddBookManually,
                                 onAddBookScan = handleAddBookScan,
+                                innerPadding = innerPadding
                             )
                         }
                     }
