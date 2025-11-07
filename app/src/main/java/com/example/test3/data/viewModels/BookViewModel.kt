@@ -51,7 +51,7 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun editBook(id: String, onFinish: () -> Unit) {
+    fun editBook(id: String, onFinish: () -> Unit = {}) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.editBook(
                 Book(

@@ -28,4 +28,5 @@
     <string name="delete_book_dialog_confirm">Удалить</string>
     <string name="error_delete_book">Ошибка: не удалось удалить книгу!</string>
     <string name="share_title">Поделиться</string>
+    <string name="error_data_lost">Ошибка: данные утеряны!</string>
 </resources>
