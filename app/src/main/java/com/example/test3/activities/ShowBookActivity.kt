@@ -9,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
@@ -18,11 +20,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
@@ -38,9 +42,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.test3.R
 import com.example.test3.data.entities.Book
 import com.example.test3.data.viewModels.BookViewModel
@@ -142,10 +148,14 @@ class ShowBookActivity: ComponentActivity() {
             }
 
             var deleteBookDialogIsVisible by remember { mutableStateOf(false) }
+            var isCoverShown by remember { mutableStateOf(false) }
+
+            val mainOverlayIsVisible = deleteBookDialogIsVisible || isCoverShown
+
             var myThoughtAddIsFocused by remember { mutableStateOf(false) }
 
             val blurRadius by animateFloatAsState(
-                targetValue = if (deleteBookDialogIsVisible) 16f else 0f,
+                targetValue = if (mainOverlayIsVisible) 16f else 0f,
                 animationSpec = tween(durationMillis = 500)
             )
 
@@ -171,12 +181,7 @@ class ShowBookActivity: ComponentActivity() {
                         Box (
                             modifier = Modifier
                                 .fillMaxSize()
-                                .blur(radius =
-                                    if (deleteBookDialogIsVisible)
-                                        blurRadius.dp
-                                    else
-                                        0.dp
-                                )
+                                .blur(radius = blurRadius.dp)
                                 .padding(innerPadding)
                                 .padding(horizontal = 20.dp)
                         ) {
@@ -231,7 +236,12 @@ class ShowBookActivity: ComponentActivity() {
                             }
 
                             Column {
-                                BookGeneralInfo(book)
+                                BookGeneralInfo(
+                                    book = book,
+                                    onCoverClick = {
+                                        isCoverShown = true
+                                    }
+                                )
 
                                 Spacer(Modifier.height(10.dp))
 
@@ -244,15 +254,10 @@ class ShowBookActivity: ComponentActivity() {
                         Box (
                             modifier = Modifier
                                 .fillMaxSize()
-                                .blur(radius =
-                                    if (deleteBookDialogIsVisible)
-                                        blurRadius.dp
-                                    else
-                                        0.dp
-                                ),
+                                .blur(radius = blurRadius.dp),
                             contentAlignment = Alignment.BottomCenter,
                         ) {
-                            Overlay(myThoughtAddIsFocused && !deleteBookDialogIsVisible) {
+                            Overlay(myThoughtAddIsFocused && !mainOverlayIsVisible) {
                                 myThoughtAddIsFocused = false
                             }
 
@@ -306,8 +311,9 @@ class ShowBookActivity: ComponentActivity() {
                             }
                         }
 
-                        Overlay(deleteBookDialogIsVisible) {
+                        Overlay(mainOverlayIsVisible) {
                             deleteBookDialogIsVisible = false
+                            isCoverShown = false
                         }
 
                         AnimatedVisibility(
@@ -333,6 +339,34 @@ class ShowBookActivity: ComponentActivity() {
                                     },
                                     innerPadding = innerPadding
                                 )
+                            }
+                        }
+
+                        AnimatedVisibility(
+                            visible = isCoverShown,
+                            enter = fadeIn(),
+                            exit = fadeOut(),
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(innerPadding)
+                                    .padding(horizontal = 30.dp)
+                                    .aspectRatio(0.66f)
+                                    .clip(RoundedCornerShape(26.dp))
+                                    .background(MaterialTheme.colorScheme.surface),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                if (book.coverUri != null) {
+                                    CircularProgressIndicator()
+
+                                    AsyncImage(
+                                        model = book.coverUri,
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentDescription = book.title,
+                                        contentScale = ContentScale.Crop,
+                                    )
+                                }
                             }
                         }
 

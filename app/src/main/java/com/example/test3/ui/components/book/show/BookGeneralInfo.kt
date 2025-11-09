@@ -1,6 +1,7 @@
 package com.example.test3.ui.components.book.show
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,7 +26,7 @@ import com.example.test3.data.entities.Book
 import com.example.test3.ui.components.book.AuthorItem
 
 @Composable
-fun BookGeneralInfo(book: Book, onCoverLoaded: () -> Unit = {}) {
+fun BookGeneralInfo(book: Book, onCoverClick: () -> Unit = {}, onCoverLoaded: () -> Unit = {}) {
     Column (
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -35,7 +36,10 @@ fun BookGeneralInfo(book: Book, onCoverLoaded: () -> Unit = {}) {
                 .fillMaxWidth(0.47f)
                 .aspectRatio(0.66f)
                 .clip(RoundedCornerShape(12.dp))
-                .background(MaterialTheme.colorScheme.surface),
+                .background(MaterialTheme.colorScheme.surface)
+                .clickable {
+                    onCoverClick()
+                },
             contentAlignment = Alignment.Center,
         ) {
             if (book.coverUri != null) {
