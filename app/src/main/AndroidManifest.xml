@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test3">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.ShelfActivity"
             android:exported="true"
             android:theme="@style/Theme.Test3">
             <intent-filter>
@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.ShelfActivity" />
         <activity android:name=".activities.ShowBookActivity" />
         <activity android:name=".activities.AddBookActivity" />
         <activity android:name=".activities.EditBookActivity" />

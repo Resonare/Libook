@@ -4,12 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.test3.data.dao.BookDao
+import com.example.test3.data.dao.ThoughtDao
 import com.example.test3.data.entities.Book
+import com.example.test3.data.entities.Thought
+import com.example.test3.other.ColorConverters
 
-@Database(entities = [(Book::class)], version = 3)
+@Database(
+    entities = [Book::class, Thought::class],
+    version = 7
+)
+@TypeConverters(ColorConverters::class)
 abstract class LibookDatabase: RoomDatabase() {
     abstract fun bookDao(): BookDao
+    abstract fun thoughtDao(): ThoughtDao
 
     companion object {
         private var INSTANCE: LibookDatabase? = null

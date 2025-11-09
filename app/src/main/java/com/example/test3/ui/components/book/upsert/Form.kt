@@ -1,6 +1,5 @@
 package com.example.test3.ui.components.book.upsert
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -85,10 +84,7 @@ fun Form(viewModel: BookViewModel = viewModel()) {
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
                 color =
                     if (viewModel.worldRate != null)
-                    {
-                        Log.d("TEST", "${Book.getWorldRateColor(viewModel.worldRate!!)} ${viewModel.worldRate}")
                         Book.getWorldRateColor(viewModel.worldRate!!)
-                    }
                     else
                         MaterialTheme.colorScheme.secondary,
                 placeholder = "-"

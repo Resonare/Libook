@@ -69,5 +69,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
 
+    implementation(libs.colorpicker.compose)
+
     ksp(libs.androidx.room.compiler)
 }
