@@ -11,8 +11,8 @@ import com.example.test3.data.dao.ThoughtDao
 import com.example.test3.data.entities.Book
 import com.example.test3.data.entities.Rate
 import com.example.test3.data.entities.Thought
-import com.example.test3.other.ColorConverters
-import com.example.test3.other.RateTypeConverter
+import com.example.test3.data.converters.ColorConverters
+import com.example.test3.data.converters.RateTypeConverter
 
 @Database(
     entities = [Book::class, Thought::class, Rate::class],

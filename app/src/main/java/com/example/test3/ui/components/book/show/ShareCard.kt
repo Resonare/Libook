@@ -62,7 +62,7 @@ fun ShareCard(
                     BookGeneralInfo(
                         book = book,
                         rates = rates,
-                        descriptionAlwaysFull = true,
+                        shareVariant = true,
                         onCoverLoaded = {
                             isCoverLoaded = true
                         }

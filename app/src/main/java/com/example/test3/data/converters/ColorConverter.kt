@@ -1,4 +1,4 @@
-package com.example.test3.other
+package com.example.test3.data.converters
 
 import androidx.compose.ui.graphics.Color
 import androidx.room.TypeConverter

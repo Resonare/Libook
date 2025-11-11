@@ -23,7 +23,7 @@ import com.example.test3.R
 import com.example.test3.data.entities.Book
 
 @Composable
-fun BookDescriptionItem(book: Book, alwaysFull: Boolean) {
+fun BookDescriptionItem(book: Book) {
     var annotationIsEllipsized by remember { mutableStateOf(false) }
     var showFullAnnotation by remember { mutableStateOf(false) }
     var isMultiline by remember { mutableStateOf(true) }
@@ -33,7 +33,7 @@ fun BookDescriptionItem(book: Book, alwaysFull: Boolean) {
             text = book.description,
             overflow = TextOverflow.Ellipsis,
             maxLines =
-                if (showFullAnnotation || alwaysFull) Int.MAX_VALUE
+                if (showFullAnnotation) Int.MAX_VALUE
                 else 3,
             style = MaterialTheme.typography.bodySmall.copy(
                 textIndent = if (isMultiline) TextIndent(firstLine = 24.sp) else TextIndent.None
@@ -45,7 +45,7 @@ fun BookDescriptionItem(book: Book, alwaysFull: Boolean) {
             },
         )
 
-        if ((annotationIsEllipsized || showFullAnnotation) && !alwaysFull) {
+        if (annotationIsEllipsized || showFullAnnotation) {
             Spacer(Modifier.height(3.dp))
 
             Text(

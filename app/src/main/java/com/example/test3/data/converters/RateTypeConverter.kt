@@ -1,4 +1,4 @@
-package com.example.test3.other
+package com.example.test3.data.converters
 
 import androidx.room.TypeConverter
 import com.example.test3.data.entities.RateType
