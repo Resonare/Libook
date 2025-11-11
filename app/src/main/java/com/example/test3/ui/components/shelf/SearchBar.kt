@@ -37,11 +37,13 @@ import com.example.test3.R
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
+    searchQuery: String,
+    handleChange: (String) -> Unit,
     hintText: String = "",
     showTwoInRow: Boolean,
     onShowInRowChange: () -> Unit
 ) {
-    var queryText by remember { mutableStateOf("") }
+
     var isFocused by remember { mutableStateOf(false) }
 
     Box {
@@ -85,12 +87,12 @@ fun SearchBar(
                         .onFocusChanged { focusState ->
                             isFocused = focusState.isFocused && !isFocused
                         },
-                    value = queryText,
-                    onValueChange = { queryText = it },
+                    value = searchQuery,
+                    onValueChange = { handleChange(it) },
                     textStyle = MaterialTheme.typography.displayMedium.copy(color = MaterialTheme.colorScheme.secondary),
                     singleLine = true,
                     decorationBox = { innerTextField ->
-                        if (queryText.isEmpty() && !isFocused) {
+                        if (searchQuery.isEmpty() && !isFocused) {
                             Text(
                                 text = hintText,
                                 color = MaterialTheme.colorScheme.tertiary,

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,6 +31,17 @@ fun Shelf(
     handleFilterSelect: (FilterOption) -> Unit
 ) {
     var showTwoInRow by remember { mutableStateOf(true) }
+    var searchQuery by remember { mutableStateOf("") }
+
+    val booksList by viewModel.booksList.observeAsState(listOf())
+
+    val filteredBooksList = booksList.filter { book ->
+        val query = searchQuery.trim().lowercase()
+
+        if (query.isBlank()) return@filter true
+
+        book.title.lowercase().contains(query) || book.author.lowercase().contains(query)
+    }
 
     Box(
         modifier = Modifier
@@ -43,6 +55,10 @@ fun Shelf(
                 .fillMaxHeight(),
         ) {
             SearchBar(
+                searchQuery = searchQuery,
+                handleChange = {
+                    searchQuery = it
+                },
                 hintText = stringResource(R.string.search_hint),
                 showTwoInRow = showTwoInRow,
                 onShowInRowChange = {
@@ -56,7 +72,7 @@ fun Shelf(
 
             Spacer(Modifier.height(15.dp))
 
-            BooksGrid(viewModel, showTwoInRow, handleShowBook)
+            BooksGrid(filteredBooksList, showTwoInRow, handleShowBook)
         }
     }
 }
