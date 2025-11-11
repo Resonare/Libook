@@ -62,8 +62,8 @@ class EditBookActivity: ComponentActivity() {
         setContent {
             val viewModel: BookViewModel = viewModel()
 
-            val bookWithThoughts by viewModel.getBook(bookId).observeAsState()
-            val book = if (bookWithThoughts != null) bookWithThoughts!!.first else null
+            val bookFullTriple by viewModel.getBook(bookId).observeAsState()
+            val book = if (bookFullTriple != null) bookFullTriple!!.first else null
 
             LaunchedEffect(book) {
                 book?.let {

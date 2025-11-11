@@ -26,6 +26,7 @@
         <activity android:name=".activities.ShowBookActivity" />
         <activity android:name=".activities.AddBookActivity" />
         <activity android:name=".activities.EditBookActivity" />
+        <activity android:name=".activities.EditRatesActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

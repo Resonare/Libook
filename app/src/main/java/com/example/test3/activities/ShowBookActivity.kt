@@ -129,12 +129,20 @@ class ShowBookActivity: ComponentActivity() {
             }
         }
 
+        val handleEditRates = { rateTypeName: String? ->
+            val intent = Intent(this, EditRatesActivity::class.java)
+            intent.putExtra("bookId", bookId)
+            intent.putExtra("rateTypeName", rateTypeName)
+            startActivity(intent)
+        }
+
         setContent {
             val viewModel: BookViewModel = viewModel()
 
-            val bookWithThoughts by viewModel.getBook(bookId).observeAsState()
-            val book = if (bookWithThoughts != null) bookWithThoughts!!.first else null
-            val thoughts = if (bookWithThoughts != null) bookWithThoughts!!.second else null
+            val bookFullTriple by viewModel.getBook(bookId).observeAsState()
+            val book = if (bookFullTriple != null) bookFullTriple!!.first else null
+            val thoughts = if (bookFullTriple != null) bookFullTriple!!.second else null
+            val rates = if (bookFullTriple != null) bookFullTriple!!.third else null
 
             LaunchedEffect(book) {
                 book?.let {
@@ -238,8 +246,12 @@ class ShowBookActivity: ComponentActivity() {
                             Column {
                                 BookGeneralInfo(
                                     book = book,
+                                    rates = rates ?: emptyList(),
                                     onCoverClick = {
                                         isCoverShown = true
+                                    },
+                                    onRateClick = { rateTypeName: String? ->
+                                        handleEditRates(rateTypeName)
                                     }
                                 )
 
@@ -372,6 +384,7 @@ class ShowBookActivity: ComponentActivity() {
 
                         ShareCard(
                             book = book,
+                            rates = rates ?: emptyList(),
                             isSharing = isSharing,
                             onResult = {
                                 isSharing = false

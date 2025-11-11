@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import com.example.test3.R
 import com.example.test3.data.entities.Book
+import com.example.test3.data.entities.Rate
 import com.example.test3.ui.components.CaptureAsBitmap
 import java.io.File
 import java.io.FileOutputStream
@@ -32,6 +33,7 @@ import java.io.FileOutputStream
 @Composable
 fun ShareCard(
     book: Book,
+    rates: List<Rate>,
     isSharing: Boolean,
     onResult: (ActivityResult) -> Unit,
     innerPadding: PaddingValues,
@@ -55,10 +57,16 @@ fun ShareCard(
                         .background(MaterialTheme.colorScheme.background)
                         .padding(innerPadding)
                         .padding(top = 40.dp)
+                        .padding(horizontal = 20.dp)
                 ) {
-                    BookGeneralInfo(book) {
-                        isCoverLoaded = true
-                    }
+                    BookGeneralInfo(
+                        book = book,
+                        rates = rates,
+                        descriptionAlwaysFull = true,
+                        onCoverLoaded = {
+                            isCoverLoaded = true
+                        }
+                    )
                 }
             },
             allIsLoaded = isCoverLoaded

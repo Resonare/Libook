@@ -8,7 +8,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.test3.data.entities.Book
-import com.example.test3.data.relations.BookWithThoughts
+import com.example.test3.data.relations.BookFull
 
 @Dao
 interface BookDao {
@@ -17,7 +17,7 @@ interface BookDao {
 
     @Transaction
     @Query("SELECT * FROM books WHERE id = :id")
-    fun getOne(id: String): LiveData<BookWithThoughts?>
+    fun getOne(id: String): LiveData<BookFull?>
 
 //    @Query("SELECT * FROM books WHERE id = :id")
 //    fun getOne(id: String): LiveData<Book?>

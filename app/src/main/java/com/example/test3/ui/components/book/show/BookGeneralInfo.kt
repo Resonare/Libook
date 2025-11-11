@@ -2,8 +2,10 @@ package com.example.test3.ui.components.book.show
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,10 +25,18 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import com.example.test3.data.entities.Book
+import com.example.test3.data.entities.Rate
 import com.example.test3.ui.components.book.AuthorItem
 
 @Composable
-fun BookGeneralInfo(book: Book, onCoverClick: () -> Unit = {}, onCoverLoaded: () -> Unit = {}) {
+fun BookGeneralInfo(
+    book: Book,
+    rates: List<Rate> = emptyList(),
+    descriptionAlwaysFull: Boolean = false,
+    onCoverClick: () -> Unit = {},
+    onCoverLoaded: () -> Unit = {},
+    onRateClick: (String?) -> Unit = {}
+) {
     Column (
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -79,15 +89,20 @@ fun BookGeneralInfo(book: Book, onCoverClick: () -> Unit = {}, onCoverLoaded: ()
 
         Spacer(Modifier.height(10.dp))
 
-//        Row (
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-//            book.rates.forEach {
-//                RateItem(it)
-//            }
-//        }
+        Row (
+            horizontalArrangement = Arrangement.spacedBy(17.dp)
+        ) {
+            if (rates.isEmpty()) {
+                RateItem(onRateClick = onRateClick)
+            } else {
+                rates.forEach {
+                    RateItem(rate = it, onRateClick = onRateClick)
+                }
+            }
+        }
 
-        BookDescriptionItem(book)
+        Spacer(Modifier.height(10.dp))
+
+        BookDescriptionItem(book, descriptionAlwaysFull)
     }
 }

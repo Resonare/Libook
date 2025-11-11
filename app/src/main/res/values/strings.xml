@@ -30,4 +30,9 @@
     <string name="share_title">Поделиться</string>
     <string name="error_data_lost">Ошибка: данные утеряны!</string>
     <string name="error_thought_empty">Ошибка: напишите что-нибудь</string>
+    <string name="rate_control_do_nothing">Не оценивать</string>
+    <string name="rate_control_delete">Удалить оценку</string>
+    <string name="rate_control_edit">Изменить оценку</string>
+    <string name="rate_control_share">Поделиться</string>
+    <string name="rate_control_add">Поставить оценку</string>
 </resources>

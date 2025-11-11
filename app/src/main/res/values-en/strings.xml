@@ -30,4 +30,9 @@
     <string name="share_title">Share</string>
     <string name="error_data_lost">Error: data was lost!</string>
     <string name="error_thought_empty">Error: write something</string>
+    <string name="rate_control_do_nothing">Do not rate</string>
+    <string name="rate_control_delete">Delete rate</string>
+    <string name="rate_control_edit">Change rate</string>
+    <string name="rate_control_share">Share</string>
+    <string name="rate_control_add">Rate</string>
 </resources>

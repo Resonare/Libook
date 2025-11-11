@@ -2,6 +2,7 @@ package com.example.test3.ui.components.book.show
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,18 +24,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.test3.other.Rate
+import com.example.test3.data.entities.Rate
+import com.example.test3.data.entities.RateType
 import com.example.test3.ui.theme.Black10
 import com.example.test3.ui.theme.Black80
 import com.example.test3.ui.theme.Green100
 import com.example.test3.ui.theme.Red100
 
 @Composable
-fun RateItem(rate: Rate) {
-    val color = when(rate.value) {
+fun RateItem(rate: Rate? = null, rateType: RateType? = null, onRateClick: (String?) -> Unit) {
+    val color = when(rate?.value) {
         in 1..4 -> Red100
         in 7..10 -> Green100
         else -> Black80
+    }
+
+    val usingRateType = when {
+        rate?.type != null -> rate.type
+        rateType != null -> rateType
+        else -> RateType.GENERAL
     }
 
     Column (
@@ -44,6 +52,9 @@ fun RateItem(rate: Rate) {
             modifier = Modifier
                 .clip(RoundedCornerShape(30.dp))
                 .background(color)
+                .clickable {
+                    onRateClick(rate?.type?.name ?: rateType?.name)
+                }
                 .padding(horizontal = 10.dp, vertical = 2.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -55,8 +66,8 @@ fun RateItem(rate: Rate) {
                 Image(
                     modifier = Modifier
                         .fillMaxHeight(),
-                    painter = painterResource(rate.type.iconId),
-                    contentDescription = stringResource(rate.type.descriptionId),
+                    painter = painterResource(usingRateType.iconId),
+                    contentDescription = stringResource(usingRateType.descriptionId),
                     contentScale = ContentScale.Fit,
                 )
             }
@@ -64,14 +75,20 @@ fun RateItem(rate: Rate) {
             Spacer(Modifier.width(10.dp))
 
             Text(
-                text = rate.value.toString(),
+                text =
+                    if (rate?.value != null && rate.value != 0)
+                        rate.value.toString()
+                    else
+                        "-",
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                 color = Black10
             )
         }
 
+        Spacer(Modifier.height(2.dp))
+
         Text(
-            text = stringResource(rate.type.descriptionId),
+            text = stringResource(usingRateType.descriptionId),
             style = MaterialTheme.typography.displaySmall,
             color = MaterialTheme.colorScheme.tertiary,
             textAlign = TextAlign.Center

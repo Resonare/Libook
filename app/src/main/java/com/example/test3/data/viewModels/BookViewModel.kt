@@ -10,6 +10,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.test3.data.db.LibookDatabase
 import com.example.test3.data.entities.Book
+import com.example.test3.data.entities.Rate
+import com.example.test3.data.entities.RateType
 import com.example.test3.data.entities.Thought
 import com.example.test3.data.repositories.Repository
 import kotlinx.coroutines.Dispatchers
@@ -32,12 +34,13 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
         val db = LibookDatabase.getInstance(application)
         val bookDao = db.bookDao()
         val thoughtDao = db.thoughtDao()
-        repository = Repository(bookDao, thoughtDao)
+        val rateDao = db.rateDao()
+        repository = Repository(bookDao, thoughtDao, rateDao)
         booksList = repository.booksList
     }
 
-    fun getBook(id: String): LiveData<Pair<Book, List<Thought>>?> {
-        return repository.getOne(id)
+    fun getBook(id: String): LiveData<Triple<Book, List<Thought>, List<Rate>>?> {
+        return repository.getOneBook(id)
     }
 
     fun addBook(onFinish: (String) -> Unit) {
@@ -95,6 +98,40 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
     fun deleteThought(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteThought(id)
+        }
+    }
+
+    fun addRate(bookId: String, type: RateType, value: Int, onFinish: (String) -> Unit) {
+        val rate = Rate(
+            value = value,
+            type = type,
+            bookId = bookId,
+        )
+
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addRate(rate)
+            onFinish(rate.id)
+        }
+    }
+
+    fun editRate(id: String, bookId: String, value: Int, type: RateType, onFinish: () -> Unit = {}) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.editRate(
+                Rate(
+                    id = id,
+                    bookId = bookId,
+                    value = value,
+                    type = type,
+                )
+            )
+            onFinish()
+        }
+    }
+
+    fun deleteRate(id: String, onFinish: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRate(id)
+            onFinish()
         }
     }
 }
