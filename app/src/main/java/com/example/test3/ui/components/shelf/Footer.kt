@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,6 +30,8 @@ import com.example.test3.R
 @Composable
 fun Footer(
     modifier: Modifier,
+    isSettingsOpened: Boolean,
+    handleSettingsOpenedChange: (Boolean) -> Unit,
     innerPadding: PaddingValues,
     onAddMethodSelectionOpen: () -> Unit,
 ) {
@@ -54,22 +57,42 @@ fun Footer(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
-                modifier = Modifier.fillMaxWidth(0.5f),
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .clickable {
+                        if (!isSettingsOpened) handleSettingsOpenedChange(true)
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painterResource(R.drawable.ic_book),
+                    painter = (
+                        if (!isSettingsOpened) {
+                            painterResource(R.drawable.ic_book_active)
+                        } else {
+                            painterResource(R.drawable.ic_book)
+                        }
+                    ),
                     contentDescription = "Shelf menu",
                     contentScale = ContentScale.Fit,
                 )
             }
 
             Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        if (!isSettingsOpened) handleSettingsOpenedChange(true)
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painterResource(R.drawable.ic_book),
+                    painter = (
+                        if (isSettingsOpened) {
+                            painterResource(R.drawable.ic_settings_active)
+                        } else {
+                            painterResource(R.drawable.ic_settings)
+                        }
+                    ),
                     contentDescription = "Shelf menu",
                     contentScale = ContentScale.Fit,
                 )
@@ -78,7 +101,7 @@ fun Footer(
 
         Box(
             modifier = Modifier
-                .fillMaxWidth(0.2f)
+                .width(80.dp)
                 .aspectRatio(1f)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary)
@@ -91,7 +114,7 @@ fun Footer(
             Image(
                 painterResource(R.drawable.ic_plus),
                 contentDescription = "Add",
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Fit,
             )
         }
     }

@@ -10,15 +10,19 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,13 +31,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.test3.data.entities.Book
 import com.example.test3.data.viewModels.BookViewModel
 import com.example.test3.other.FilterOption
 import com.example.test3.ui.components.shelf.AddBookMethodSelection
 import com.example.test3.ui.components.shelf.Footer
+import com.example.test3.ui.components.shelf.Settings
 import com.example.test3.ui.components.shelf.Shelf
 import com.example.test3.ui.theme.LibookTheme
 
@@ -70,7 +77,26 @@ class ShelfActivity: ComponentActivity() {
                 animationSpec = tween(durationMillis = 500)
             )
 
-            LibookTheme {
+            var isSettingsOpened by remember { mutableStateOf(false) }
+
+            val context = LocalContext.current
+
+            val savedTheme = context
+                .getSharedPreferences("settings", MODE_PRIVATE)
+                .getBoolean("dark_theme", isSystemInDarkTheme())
+
+            var isDarkTheme by remember { mutableStateOf(savedTheme) }
+
+            LaunchedEffect(isDarkTheme) {
+                context.getSharedPreferences("settings", MODE_PRIVATE)
+                    .edit {
+                        putBoolean("dark_theme", isDarkTheme)
+                    }
+            }
+
+            LibookTheme (
+                darkTheme = isDarkTheme
+            ) {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
@@ -90,6 +116,10 @@ class ShelfActivity: ComponentActivity() {
                                 .align(Alignment.BottomCenter),
                             onAddMethodSelectionOpen = {
                                 addMethodSelectionIsVisible = true
+                            },
+                            isSettingsOpened = isSettingsOpened,
+                            handleSettingsOpenedChange = { newIsSettingsOpened ->
+                                isSettingsOpened = newIsSettingsOpened
                             },
                             innerPadding = innerPadding
                         )
@@ -129,6 +159,27 @@ class ShelfActivity: ComponentActivity() {
                                 innerPadding = innerPadding
                             )
                         }
+                    }
+
+                    AnimatedVisibility(
+                        visible = isSettingsOpened,
+                        enter = slideInHorizontally(
+                            initialOffsetX = { it }
+                        ),
+                        exit = slideOutHorizontally(
+                            targetOffsetX = { it }
+                        )
+                    ) {
+                        Settings(
+                            innerPadding = innerPadding,
+                            isDarkTheme = isDarkTheme,
+                            handleClose = {
+                                isSettingsOpened = false
+                            },
+                            handleChangeDarkTheme = {
+                                isDarkTheme = !isDarkTheme
+                            }
+                        )
                     }
                 }
             }

@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
@@ -81,7 +80,7 @@ fun RateCarousel(listState: LazyListState, currentIndex: Int) {
                     ) {
                         Text(
                             text = if (index == 0) "-" else index.toString(),
-                            color = Color.Black,
+                            color = MaterialTheme.colorScheme.secondary,
                             style = MaterialTheme.typography.titleSmall.copy(fontSize = 56.sp)
                         )
                     }

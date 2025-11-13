@@ -14,6 +14,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,7 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -181,7 +183,17 @@ class ShowBookActivity: ComponentActivity() {
                 }
             }
 
-            LibookTheme {
+            val context = LocalContext.current
+
+            val savedTheme = context
+                .getSharedPreferences("settings", MODE_PRIVATE)
+                .getBoolean("dark_theme", isSystemInDarkTheme())
+
+            var isDarkTheme by remember { mutableStateOf(savedTheme) }
+
+            LibookTheme (
+                darkTheme = isDarkTheme
+            ) {
                 Scaffold (
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->

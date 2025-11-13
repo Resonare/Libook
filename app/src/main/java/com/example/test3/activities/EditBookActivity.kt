@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -16,7 +17,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -65,6 +70,14 @@ class EditBookActivity: ComponentActivity() {
             val bookFullTriple by viewModel.getBook(bookId).observeAsState()
             val book = if (bookFullTriple != null) bookFullTriple!!.first else null
 
+            val context = LocalContext.current
+
+            val savedTheme = context
+                .getSharedPreferences("settings", MODE_PRIVATE)
+                .getBoolean("dark_theme", isSystemInDarkTheme())
+
+            var isDarkTheme by remember { mutableStateOf(savedTheme) }
+
             LaunchedEffect(book) {
                 book?.let {
                     viewModel.title = it.title
@@ -76,7 +89,9 @@ class EditBookActivity: ComponentActivity() {
                 }
             }
 
-            LibookTheme {
+            LibookTheme (
+                darkTheme = isDarkTheme
+            ) {
                 Scaffold (
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
