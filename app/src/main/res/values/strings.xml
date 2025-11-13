@@ -35,4 +35,7 @@
     <string name="rate_control_edit">Изменить оценку</string>
     <string name="rate_control_share">Поделиться</string>
     <string name="rate_control_add">Поставить оценку</string>
+    <string name="scanner_permission_hint">Для сканера необходимо разрешение на работу камеры!</string>
+    <string name="scanner_loading_hint">Подождите, данные загружаются…</string>
+    <string name="saving_cover_hint">Подождите, пока обложка загрузится…</string>
 </resources>

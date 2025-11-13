@@ -35,4 +35,7 @@
     <string name="rate_control_edit">Change rate</string>
     <string name="rate_control_share">Share</string>
     <string name="rate_control_add">Rate</string>
+    <string name="scanner_permission_hint">Scanner requires camera permission!</string>
+    <string name="scanner_loading_hint">Wait please…</string>
+    <string name="saving_cover_hint">Please wait while the cover is loading…</string>
 </resources>

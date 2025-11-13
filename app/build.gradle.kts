@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.animation.core)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.play.services.mlkit.barcode.scanning)
+    implementation(libs.androidx.camera.mlkit.vision)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,6 +74,15 @@ dependencies {
     implementation(libs.androidx.room.runtime)
 
     implementation(libs.colorpicker.compose)
+
+    implementation(libs.androidx.camera.core)
+    implementation(libs.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.accompanist.permissions)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     ksp(libs.androidx.room.compiler)
 }

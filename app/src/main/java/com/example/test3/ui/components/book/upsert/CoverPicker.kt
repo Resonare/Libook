@@ -1,6 +1,7 @@
 package com.example.test3.ui.components.book.upsert
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,7 +27,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
+import coil.ImageLoader
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.example.test3.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,7 +49,7 @@ fun CoverPicker(value: String?, onLoad: (String) -> Unit) {
     ) { uri: Uri? ->
         uri?.let {
             scope.launch {
-                val loadedUri = saveImageToInternalStorage(context, it)
+                val loadedUri = saveInternalImageToInternalStorage(context, it)
 
                 if (loadedUri != null)
                     onLoad(loadedUri)
@@ -97,7 +102,7 @@ fun CoverPicker(value: String?, onLoad: (String) -> Unit) {
     }
 }
 
-suspend fun saveImageToInternalStorage(
+suspend fun saveInternalImageToInternalStorage(
     context: Context,
     uri: Uri
 ): String? = withContext(Dispatchers.IO) {
@@ -110,8 +115,38 @@ suspend fun saveImageToInternalStorage(
                 inputStream.copyTo(outputStream)
             }
 
+            inputStream.close()
+
             Uri.fromFile(file).toString()
         }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
+
+suspend fun saveExternalImageToInternalStorage(
+    context: Context,
+    url: String
+): String? = withContext(Dispatchers.IO) {
+    try {
+        val loader = ImageLoader(context)
+        val request = ImageRequest.Builder(context)
+            .data(url)
+            .allowHardware(false)
+            .build()
+
+        val result = (loader.execute(request) as? SuccessResult) ?: return@withContext null
+        val bitmap = result.drawable.toBitmap()
+
+        val fileName = "cover_${System.currentTimeMillis()}.jpg"
+        val file = File(context.filesDir, fileName)
+
+        FileOutputStream(file).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
+        }
+
+        Uri.fromFile(file).toString()
     } catch (e: Exception) {
         e.printStackTrace()
         null

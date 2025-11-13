@@ -1,8 +1,6 @@
 package com.example.test3.ui.components
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,11 +22,13 @@ import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.example.test3.ui.theme.Black50
 
 @Composable
 fun CircleButton(
     painter: Painter,
     isActive: Boolean = false,
+    isDisabled: Boolean = false,
     onClick: () -> Unit,
     contentDescription: String = "Button",
 ) {
@@ -44,6 +44,8 @@ fun CircleButton(
         targetValue =
             if (isActive)
                 MaterialTheme.colorScheme.background
+            else if (isDisabled)
+                Black50
             else
                 MaterialTheme.colorScheme.secondary
     )

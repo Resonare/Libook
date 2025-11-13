@@ -51,7 +51,8 @@ class ShelfActivity: ComponentActivity() {
         val handleFilterSelect: (FilterOption) -> Unit = {}
 
         val handleAddBookScan = {
-
+            val intent = Intent(this, ScannerActivity::class.java)
+            startActivity(intent)
         }
 
         val handleAddBookManually = {

@@ -1,6 +1,7 @@
 package com.example.test3.data.viewModels
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,12 +15,17 @@ import com.example.test3.data.entities.Rate
 import com.example.test3.data.entities.RateType
 import com.example.test3.data.entities.Thought
 import com.example.test3.data.repositories.Repository
+import com.example.test3.data.retrofit.instances.GoogleInstance
+import com.example.test3.data.retrofit.instances.OpenLibraryInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BookViewModel(application: Application): AndroidViewModel(application) {
     val booksList: LiveData<List<Book>>
     private val repository: Repository
+
+    var isLoadingBook by mutableStateOf(false)
+    var isSavingCover by mutableStateOf(false)
 
     var title by mutableStateOf("")
     var author by mutableStateOf("")
@@ -132,6 +138,44 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteRate(id)
             onFinish()
+        }
+    }
+
+    fun searchBookByIsbn(isbn: String, onFinish: () -> Unit = {}) {
+        viewModelScope.launch {
+            isLoadingBook = true
+
+            try {
+                val openLibraryResponse = OpenLibraryInstance.api.getBookByIsbn("ISBN:$isbn")
+                val openLibraryBook = openLibraryResponse["ISBN:$isbn"]
+
+                val googleResponse = GoogleInstance.api.getBookByIsbn("isbn:$isbn", "AIzaSyA9YCbc0SMEIR0FQuQPLMKwUX2BjQcaE7Q")
+                val googleBook = googleResponse.items?.firstOrNull()
+
+                if (googleBook != null) {
+                    title = googleBook.volumeInfo?.title ?: ""
+                    author = googleBook.volumeInfo?.authors?.joinToString() ?: ""
+                    description = googleBook.volumeInfo?.description ?: ""
+                    worldRate = googleBook.volumeInfo?.averageRating?.toFloat()?.times(2)
+                }
+
+                if (openLibraryBook != null) {
+                    title = title.ifBlank { openLibraryBook.title ?: "" }
+                    author = author.ifBlank { openLibraryBook.authors?.joinToString { author -> author.name ?: "" } ?: "" }
+                    coverUri = openLibraryBook.cover?.large
+                }
+
+                if (googleBook != null) {
+                    coverUri = coverUri?.ifBlank { googleBook.volumeInfo?.imageLinks?.thumbnail }
+                }
+
+                isLoadingBook = false
+
+                onFinish()
+            } catch (e: Exception) {
+                Log.e("Search failed:", e.stackTrace.toString())
+                isLoadingBook = false
+            }
         }
     }
 }
