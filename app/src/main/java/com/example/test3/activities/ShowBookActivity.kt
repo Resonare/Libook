@@ -205,6 +205,27 @@ class ShowBookActivity: ComponentActivity() {
                                 .padding(innerPadding)
                                 .padding(horizontal = 20.dp)
                         ) {
+                            Column (
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                BookGeneralInfo(
+                                    book = book,
+                                    rates = rates ?: emptyList(),
+                                    onCoverClick = {
+                                        isCoverShown = true
+                                    },
+                                    onRateClick = { rateTypeName: String? ->
+                                        handleEditRates(rateTypeName)
+                                    }
+                                )
+
+                                if (thoughts != null) {
+                                    Spacer(Modifier.height(10.dp))
+
+                                    MyThoughtsSection(thoughts, handleDeleteThought)
+                                }
+                            }
+
                             Row (
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
@@ -252,25 +273,6 @@ class ShowBookActivity: ComponentActivity() {
                                         },
                                         contentDescription = "Delete button",
                                     )
-                                }
-                            }
-
-                            Column {
-                                BookGeneralInfo(
-                                    book = book,
-                                    rates = rates ?: emptyList(),
-                                    onCoverClick = {
-                                        isCoverShown = true
-                                    },
-                                    onRateClick = { rateTypeName: String? ->
-                                        handleEditRates(rateTypeName)
-                                    }
-                                )
-
-                                Spacer(Modifier.height(10.dp))
-
-                                if (thoughts != null) {
-                                    MyThoughtsSection(thoughts, handleDeleteThought)
                                 }
                             }
                         }

@@ -2,6 +2,7 @@ package com.example.test3.ui.components.book.upsert
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ fun Input(
     style: TextStyle,
     color: Color = MaterialTheme.colorScheme.secondary,
     placeholder: String,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -37,6 +39,7 @@ fun Input(
             textAlign = TextAlign.Center,
             color = color
         ),
+        keyboardOptions = keyboardOptions,
         decorationBox = { innerTextField ->
             Box (
                 contentAlignment = Alignment.Center

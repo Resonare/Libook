@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -35,7 +34,7 @@ fun ShareCard(
     book: Book,
     rates: List<Rate>,
     isSharing: Boolean,
-    onResult: (ActivityResult) -> Unit,
+    onResult: () -> Unit,
     innerPadding: PaddingValues,
 ) {
     val context = LocalContext.current
@@ -46,7 +45,7 @@ fun ShareCard(
     if (isSharing) {
         val shareLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.StartActivityForResult(),
-            onResult = onResult
+            onResult = { }
         )
 
         CaptureAsBitmap(
@@ -72,6 +71,8 @@ fun ShareCard(
             allIsLoaded = isCoverLoaded
         ) { bitmap ->
             val bitmapUri = saveBitmapToCache(context, bitmap)
+
+            onResult()
 
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND

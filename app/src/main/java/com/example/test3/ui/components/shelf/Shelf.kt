@@ -66,9 +66,9 @@ fun Shelf(
                 }
             )
 
-            Spacer(Modifier.height(15.dp))
-
-            FilterBar(handleFilterSelect)
+//            Spacer(Modifier.height(15.dp))
+//
+//            FilterBar(handleFilterSelect)
 
             Spacer(Modifier.height(15.dp))
 

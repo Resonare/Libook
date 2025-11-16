@@ -2,7 +2,8 @@ package com.example.test3.ui.components.book.show
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,7 +22,7 @@ fun MyThoughtsSection(
     handleDeleteThought: (String) -> Unit
 ) {
     Column (
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxSize()
     ) {
         Text(
             text = stringResource(R.string.my_thoughts),
@@ -30,7 +31,7 @@ fun MyThoughtsSection(
         )
 
         LazyColumn(
-            modifier = Modifier.weight(0.8f)
+            modifier = Modifier.fillMaxHeight()
         ) {
             items(
                 items = thoughts,

@@ -4,7 +4,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -103,7 +103,7 @@ fun MyThoughtCard(thought: Thought, handleDeleteThought: (String) -> Unit) {
                     .background(MaterialTheme.colorScheme.background)
                     .padding(vertical = 10.dp)
                     .pointerInput(Unit) {
-                        detectDragGestures(
+                        detectHorizontalDragGestures (
                             onDragEnd = {
                                 offset =
                                     if (offset < -with(density) { bountyOffset.toPx() }) {
@@ -120,8 +120,8 @@ fun MyThoughtCard(thought: Thought, handleDeleteThought: (String) -> Unit) {
                                         0f
                                     }
                             },
-                            onDrag = { change, dragAmount ->
-                                offset += dragAmount.x
+                            onHorizontalDrag = { change, dragAmount ->
+                                offset += dragAmount
                                 if (offset > 0) offset = 0f
 
                                 change.consume()

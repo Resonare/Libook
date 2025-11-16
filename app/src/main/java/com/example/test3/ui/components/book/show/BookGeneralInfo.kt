@@ -5,14 +5,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,10 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
+import coil.request.ImageRequest
 import com.example.test3.data.entities.Book
 import com.example.test3.data.entities.Rate
 import com.example.test3.ui.components.book.AuthorItem
@@ -43,7 +48,7 @@ fun BookGeneralInfo(
             if (shareVariant)
                 Modifier.fillMaxSize()
             else
-                Modifier.fillMaxWidth(),
+                Modifier.fillMaxWidth().fillMaxHeight(0.66f).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -67,7 +72,10 @@ fun BookGeneralInfo(
                     CircularProgressIndicator()
 
                     AsyncImage(
-                        model = book.coverUri,
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(book.coverUri)
+                            .allowHardware(false)
+                            .build(),
                         modifier = Modifier.fillMaxSize(),
                         contentDescription = book.title,
                         contentScale = ContentScale.Crop,
@@ -83,7 +91,7 @@ fun BookGeneralInfo(
             Spacer(Modifier.height(20.dp))
 
             Column (
-                modifier = Modifier.fillMaxWidth(0.6f),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -101,9 +109,13 @@ fun BookGeneralInfo(
 
         Spacer(Modifier.height(10.dp))
 
-        Row (
-            modifier = if (shareVariant) Modifier.padding(bottom = 40.dp) else Modifier,
-            horizontalArrangement = Arrangement.spacedBy(17.dp)
+        FlowRow (
+            modifier = Modifier,
+            horizontalArrangement = Arrangement.spacedBy(
+                space = 17.dp,
+                alignment = Alignment.CenterHorizontally,
+            ),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             if (rates.isEmpty()) {
                 RateItem(onRateClick = onRateClick)
