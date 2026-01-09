@@ -38,4 +38,7 @@
     <string name="scanner_permission_hint">Scanner requires camera permission!</string>
     <string name="scanner_loading_hint">Wait please…</string>
     <string name="saving_cover_hint">Please wait while the cover is loading…</string>
+    <string name="settings_title">Settings</string>
+    <string name="dark_theme_option">Dark theme</string>
+    <string name="version_hint">Libook 0.1 made by Resonare</string>
 </resources>

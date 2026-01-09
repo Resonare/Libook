@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -195,7 +196,8 @@ class ShowBookActivity: ComponentActivity() {
                 darkTheme = isDarkTheme
             ) {
                 Scaffold (
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                 ) { innerPadding ->
                     if (book != null) {
                         Box (
@@ -206,7 +208,9 @@ class ShowBookActivity: ComponentActivity() {
                                 .padding(horizontal = 20.dp)
                         ) {
                             Column (
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .fillMaxHeight(0.92f)
                             ) {
                                 BookGeneralInfo(
                                     book = book,
@@ -287,21 +291,16 @@ class ShowBookActivity: ComponentActivity() {
                                 myThoughtAddIsFocused = false
                             }
 
-                            Box (
-                                modifier = Modifier
-                                    .padding(innerPadding)
-                                    .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
-                            ) {
-                                MyThoughtsAdd(
-                                    viewModel = viewModel,
-                                    bookId = bookId,
-                                    handleAddThought = handleAddThought,
-                                    isFocused = myThoughtAddIsFocused,
-                                    handleFocus = { isFocused ->
-                                        myThoughtAddIsFocused = isFocused
-                                    }
-                                )
-                            }
+                            MyThoughtsAdd(
+                                viewModel = viewModel,
+                                innerPadding = innerPadding,
+                                bookId = bookId,
+                                handleAddThought = handleAddThought,
+                                isFocused = myThoughtAddIsFocused,
+                                handleFocus = { isFocused ->
+                                    myThoughtAddIsFocused = isFocused
+                                }
+                            )
 
                             AnimatedVisibility(
                                 modifier = Modifier.align(Alignment.TopCenter),

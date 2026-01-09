@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.test3.R
@@ -67,7 +68,7 @@ fun Settings(
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(
-                        text = "Настройки",
+                        text = stringResource(R.string.settings_title),
                         style = MaterialTheme.typography.bodyMedium.copy(
                             fontWeight = FontWeight.SemiBold,
                         ),
@@ -90,7 +91,7 @@ fun Settings(
                     Spacer(Modifier.width(15.dp))
 
                     Text(
-                        text = "Тёмная тема",
+                        text = stringResource(R.string.dark_theme_option),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -99,7 +100,7 @@ fun Settings(
 
             Text(
                 modifier = Modifier.padding(20.dp),
-                text = "Libook 0.1 сделан Resonare",
+                text = stringResource(R.string.version_hint),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.tertiary,
             )

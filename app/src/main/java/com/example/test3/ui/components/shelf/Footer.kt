@@ -59,8 +59,9 @@ fun Footer(
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
+                    .fillMaxHeight()
                     .clickable {
-                        if (!isSettingsOpened) handleSettingsOpenedChange(true)
+                        if (!isSettingsOpened) handleSettingsOpenedChange(false)
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -80,6 +81,7 @@ fun Footer(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .fillMaxHeight()
                     .clickable {
                         if (!isSettingsOpened) handleSettingsOpenedChange(true)
                     },

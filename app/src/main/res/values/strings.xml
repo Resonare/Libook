@@ -38,4 +38,7 @@
     <string name="scanner_permission_hint">Для сканера необходимо разрешение на работу камеры!</string>
     <string name="scanner_loading_hint">Подождите, данные загружаются…</string>
     <string name="saving_cover_hint">Подождите, пока обложка загрузится…</string>
+    <string name="settings_title">Настройки</string>
+    <string name="dark_theme_option">Тёмная тема</string>
+    <string name="version_hint">Libook 0.1 сделан Resonare</string>
 </resources>

@@ -29,7 +29,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.ShowBookActivity" />
+        <activity
+            android:name=".activities.ShowBookActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
+            />
         <activity android:name=".activities.AddBookActivity" />
         <activity android:name=".activities.EditBookActivity" />
         <activity android:name=".activities.EditRatesActivity" />
